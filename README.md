@@ -1,1 +1,1 @@
-# CS372Project
+# CS372 Software Construction - Project
