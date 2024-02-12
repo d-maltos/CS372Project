@@ -2,49 +2,42 @@ function setFormMessage(formElement, type, message) {
     const messageElement = formElement.querySelector(".form__message");
 
     messageElement.textContent = message;
-    messageElement.classList.remove("form__message--success", "form__message--error");
+    messageElement.classList.remove("form__message--success", "form__message--error", "form--hidden");
     messageElement.classList.add(`form__message--${type}`);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.querySelector("#Login");
-/*
+    const all_buttons = document.querySelectorAll('.btn');
+    let clickedButton = ""; 
+    
+    all_buttons.forEach(bt => {
+        bt.addEventListener('mousedown', (a) => {
+            clickedButton = a.target.innerHTML;
+            console.log(clickedButton);
+            if(clickedButton == "Login") {
+                console.log("Successful login detection");
+            } else {
+                console.log("Successful Signup detection");
+            }
+        });
+    });
+
     loginForm.addEventListener("submit", e => {
         e.preventDefault();
-    
-        // Info Search, AJAX/Fetch (will look into what those two terms mean)
-    
-        setFormMessage(loginForm, "error", "Invalid username/password");
-    });
-*/
-    loginForm.getElementById("sign").addEventListener("click", e => {
-        e.preventDefault();
 
-        var Username = document.getElementById("user").value;
-        const messageElement = document.querySelector(".form__message");
+        // Info Search, AJAX/Fetch (will look into what those two terms mean)
+        var username = document.getElementById("user").value;
         // Check if Username has at least 4 letters and exactly 1 underscore
         if (username.length >= 4 && username.split("_").length === 2) {
             // Username meets the criteria
-            setFormMessage(messageElement, "success", "Username is valid.");
+            setFormMessage(loginForm, "success", "Username is valid.");
             // You can proceed with further actions here
         } else {
             // Username does not meet the criteria
-            setFormMessage(messageElement, "error", "Invalid username. Please make sure it has at least 4 letters and exactly 1 underscore.");
+            setFormMessage(loginForm, "error", "Invalid username. Please make sure it has at least 4 letters and exactly 1 underscore.");
             // Add counter (WIP)
         }
+        console.log(all_buttons);
     });
-
-    document.querySelectorAll(".form__input").forEach(inputElement => {
-        inputElement.addEventListener("blur", e => {
-            if (e.target.id === "signup" && e.target.value.length > 0 && e.target.value.length < 10) {
-                setInputError(inputElement, "Username must be at least 10 characters in length");
-            }
-        });
-
-        inputElement.addEventListener("input", e => {
-            clearInputError(inputElement);
-        });
-    });
-
 });
-
