@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+        <title>
+            CS 372
+        </title>
+    </head>
+    <body>
+        
+        <div class ="wrapper">
+            <form class ="form" id="Login">
+                <h1>Login/Signup</h1>
+                <div class="form__message form__message--error"></div>
+                <div class="input-box">
+                    <input type="text" class="form__input" id="user" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="form__message form__message--error"></div>
+                <div class="input-box">
+                    <input type="password" class="form__input" id="pass" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+
+                <div class="remember">
+                    <label><input type="checkbox"> Remember me</label>
+                </div>
+
+
+                <div class="login">
+                    <button type="submit" class="btn" button id = "log">Login</button>
+                </div>
+                <div class="signup">
+                    <button type="submit" class="btn" button id = "sign">Sign-Up</button>
+                </div>
+            </form>
+        </div>
+        <script src="main.js"></script>
+    </body>
+</html>
