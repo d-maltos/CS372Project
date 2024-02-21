@@ -6,6 +6,12 @@ function setFormMessage(formElement, type, message) {
     messageElement.classList.add(`form__message--${type}`);
 }
 
+// Function to validate password requirements
+function validatePassword(password) {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.querySelector("#Login");
     const all_buttons = document.querySelectorAll('.btn');
@@ -28,10 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Info Search, AJAX/Fetch (will look into what those two terms mean)
         var username = document.getElementById("user").value;
+        var password = document.getElementById("pass").value;
         // Check if Username has at least 4 letters and exactly 1 underscore
         if (username.length >= 4 && username.split("_").length === 2) {
             // Username meets the criteria
-            setFormMessage(loginForm, "success", "Username is valid.");
+            setFormMessage(loginForm, "success", "");
+            if(!validatePassword(password)) {
+                setFormMessage(loginForm, "error", "Password must be at least 8 characters long, contain at least 1 capital letter, at least 1 lowercase letter, at least 1 number, and at least 1 special symbol.");
+            } else{
+                setFormMessage(loginForm, "success", "");
+            }
+            // setFormMessage(loginForm, "success", "Username is valid.");
             // You can proceed with further actions here
         } else {
             // Username does not meet the criteria

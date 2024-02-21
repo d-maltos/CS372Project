@@ -10,6 +10,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/login.html"));
 });
 
+app.get('*', (req, res) => {
+    res.json("page not found");
+});
+
 app.listen(8080, () => {
     console.log("App is starting at port ", 8080);
 });
