@@ -1,6 +1,3 @@
-
-
-
 * {
     margin: 0;
     padding: 0;
@@ -13,7 +10,6 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /*background-color: rgb(110, 37, 6);*/
     background: url('rustback.jpg') no-repeat;
     background-size: cover;
     background-position: center;
@@ -21,8 +17,6 @@ body {
 
 .wrapper {
     width: 420px;
-    /*background: rgba(133, 46, 9, 0.5);*/
-    /*background-color: rgb(133, 46, 9);*/
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, .2);
     backdrop-filter: blur(2px);
@@ -83,8 +77,8 @@ body {
 }
 
 .wrapper .btn {
-    width: 100%;
     height: 45px;
+    width: 160px;
     background: #fff;
     outline: none;
     border-radius: 40px;
@@ -128,4 +122,8 @@ body {
 
 .form--hidden {
     display: none;
+}
+
+.login, .signup {
+    flex-grow: 1;
 }
