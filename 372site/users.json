@@ -1,19 +1,19 @@
 {
-  "user": [
-    {
-      "username": "example1_",
-      "password": "Banana1234$",
-      "failedAttempts": 0
-    },
-    {
-      "username": "bruh_",
-      "password": "Bruh1234$",
-      "failedAttempts": 3
-    },
-    {
-      "username": "test_",
-      "password": "Test1234$*",
-      "failedAttempts": 0
-    }
-  ]
+    "user": [
+        {
+            "username": "example1_",
+            "password": "Banana1234$",
+            "failedAttempts": 0
+        },
+        {
+            "username": "bruh_",
+            "password": "Bruh1234$",
+            "failedAttempts": 0
+        },
+        {
+            "username": "test_",
+            "password": "Test1234$*",
+            "failedAttempts": 0
+        }
+    ]
 }
