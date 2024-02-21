@@ -14,6 +14,11 @@
             "username": "test_",
             "password": "Test1234$*",
             "failedAttempts": 0
+        },
+        {
+            "username": "brudda_",
+            "password": "Banana1234$",
+            "failedAttempts": 0
         }
     ]
 }

@@ -71,6 +71,19 @@ document.addEventListener("DOMContentLoaded", () => {
                             }
                         }
                     });
+                } else if (SU) {
+                    const userInfo = {
+                        username:username,
+                        password:password
+                    }
+                    $.post('/signup', userInfo, (response) => {
+                        if (response.success) {
+                            // Successful login, redirect to another page
+                            window.location.href = '/success';
+                        } else {
+                            setFormMessage(loginForm, "error", response.message);
+                        }
+                    });
                 }
 
             }

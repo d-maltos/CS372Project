@@ -1,16 +1,16 @@
 Requirements in order of priority:
-1. Correct username and password should lead to another page.
+1. Correct username and password should lead to another page. DONE
 2. Should resemble the drawn sketch. DONE
-3. .json format for storing username and password.
-4. Passwords should be 8 characters long, contain at least 1 capital letter, 1 lowercase, 1 number, and 1 special character (not .).
+3. .json format for storing username and password. DONE
+4. Passwords should be 8 characters long, contain at least 1 capital letter, 1 lowercase, 1 number, and 1 special character (not .). DONE
 5. Username requires at least 4 letters and exactly 1 underscore, no more no less. DONE
-6. Sign up button should work on the same web page as login, go through the file to see if the username and password is duplicate, if not a duplicate you can use it.
+6. Sign up button should work on the same web page as login, go through the file to see if the username and password is duplicate, if not a duplicate you can use it. DONE
 7. Passwords should not be visible when typed, and should be covered with some special character (not a letter). DONE
-8. Message saying successfully signed up.
-9. Specify whether username or password is wrong “That user does not exist” “Incorrect Password”. 
-10 5 password attempts allowed - failure results in deletion of account.
-11. Show attempts left on password guesses.
-12. Unlimited incorrect username attempts.
+8. Message saying successfully signed up. DONE
+9. Specify whether username or password is wrong “That user does not exist” “Incorrect Password”.  DONE
+10 5 password attempts allowed - failure results in deletion of account. DONE
+11. Show attempts left on password guesses. DONE
+12. Unlimited incorrect username attempts. DONE
 
 Optional:
 13. Rust colored background (good to have not mandatory) DONE
