@@ -67,7 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
                             } else if (response.message.startsWith('Incorrect password')) {
                                 // Incorrect password, display remaining attempts
                                 const remainingAttempts = parseInt(response.message.split(':')[1]);
-                                setFormMessage(loginForm, "error", `Incorrect password. Remaining attempts: ${5 - remainingAttempts}`);
+                                if (remainingAttempts > 0) {
+                                    setFormMessage(loginForm, "error", `Incorrect password. Remaining attempts: ${5 - remainingAttempts}`);
+                                } else {
+                                    setFormMessage(loginForm, "error", `User Deleted`);
+                                }
                             }
                         }
                     });
