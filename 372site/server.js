@@ -11,9 +11,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const mongoURI = "mongodb://localhost:27017"; // MongoDB connection URI
 const dbName = "MovieSite"; // Name of your MongoDB database
-const collectionName = "users"; // Name of the collection to store users
+//const collectionName = "users"; // Name of the collection to store users
 
-async function connectToMongoDB() {
+async function connectToMongoDB(collectionName) {
     const client = new MongoClient(mongoURI);
     try {
         await client.connect();
@@ -24,6 +24,7 @@ async function connectToMongoDB() {
         throw error;
     }
 }
+
 
 async function findUser(username, collection) {
     const user = await collection.findOne({ username: username });
@@ -88,6 +89,53 @@ app.get('/success', (req, res) => {
     res.json("Successful Login Credentials");
 });
 
+app.get('/movies', async (req, res) => {
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const movies = await moviesCollection.find().toArray();
+        res.render('contentMan', { movies }); // Assuming you are using a template engine like EJS
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+
+app.get('/addMovies', async (req, res) => {
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const movies = await moviesCollection.find().toArray();
+        res.sendFile(path.join(__dirname, "/public/contentManAdd.html"));
+        //res.json(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+app.post('/addMovie', async (req, res) => {
+    const { title, genre, link } = req.body;
+
+    console.log("Received movie data:");
+    console.log("Title:", title);
+    console.log("Genre:", genre);
+    console.log("Link:", link);
+
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        // Assuming your movies collection has fields title, genre, and link
+        await moviesCollection.insertOne({ title, genre, link });
+        
+        console.log("Movie added to the database successfully");
+        res.json({ success: true, message: 'Movie added successfully' });
+    } catch (error) {
+        console.error('Error adding movie:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+
+
 app.get('*', (req, res) => {
     res.json("Page not found");
 });
@@ -101,14 +149,14 @@ app.post('/login', async (req, res) => {
     const password = req.body.password;
 
     try {
-        const collection = await connectToMongoDB();
-        const user = await findUser(username, collection);
+        const usersCollection = await connectToMongoDB("users");
+        const user = await findUser(username, usersCollection);
         if (user) {
-            const passwordCorrect = await checkPasswordAndUpdateAttempts(username, password, collection);
+            const passwordCorrect = await checkPasswordAndUpdateAttempts(username, password, usersCollection);
             if (passwordCorrect) {
                 res.json({ success: true, message: 'Login successful' });
             } else {
-                const failedAttempts = await getFailedAttempts(username, collection);
+                const failedAttempts = await getFailedAttempts(username, usersCollection);
                 res.json({ success: false, message: `Incorrect password: ${failedAttempts}` });
             }
         } else {
@@ -125,12 +173,12 @@ app.post('/signup', async (req, res) => {
     const password = req.body.password;
 
     try {
-        const collection = await connectToMongoDB();
-        const userExists = await findUser(username, collection);
+        const usersCollection = await connectToMongoDB("users");
+        const userExists = await findUser(username, usersCollection);
         if (userExists) {
             res.json({ success: false, message: 'Username Taken' });
         } else {
-            const success = await createUser(username, password, collection);
+            const success = await createUser(username, password, usersCollection);
             if (success) {
                 console.log("User created successfully!");
                 res.json({ success: true, message: 'User Created' });

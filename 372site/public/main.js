@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     $.post('/login', userInfo, (response) => {
                         if (response.success) {
                             // Successful login, redirect to another page
-                            window.location.href = '/success';
+                            window.location.href = '/movies';
                         } else {
                             if (response.message === 'Username not found') {
                                 // Username not found
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     $.post('/signup', userInfo, (response) => {
                         if (response.success) {
                             // Successful login, redirect to another page
-                            window.location.href = '/success';
+                            window.location.href = '/movies';
                         } else {
                             setFormMessage(loginForm, "error", response.message);
                         }
