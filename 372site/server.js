@@ -9,6 +9,10 @@ const crypto = require("crypto");
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'public')); // Assuming your EJS files are in a directory named 'views'
+
+
 const mongoURI = "mongodb://localhost:27017"; // MongoDB connection URI
 const dbName = "MovieSite"; // Name of your MongoDB database
 //const collectionName = "users"; // Name of the collection to store users
@@ -130,6 +134,56 @@ app.post('/addMovie', async (req, res) => {
         res.json({ success: true, message: 'Movie added successfully' });
     } catch (error) {
         console.error('Error adding movie:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+
+app.get('/addMovies', async (req, res) => {
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const movies = await moviesCollection.find().toArray();
+        res.sendFile(path.join(__dirname, "/public/contentManAdd.html"));
+        //res.json(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+app.post('/deleteMovie', async (req, res) => {
+    const { title } = req.body;
+
+    console.log("Received movie data:");
+    console.log("Title:", title);
+
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        // Delete the movie with the given title
+        const deletionResult = await moviesCollection.deleteOne({ title: title });
+
+        if (deletionResult.deletedCount === 1) {
+            console.log("Movie removed from the database successfully");
+            res.json({ success: true, message: 'Movie deleted successfully' });
+        } else {
+            console.log("Movie not found in the database");
+            res.status(404).json({ success: false, message: 'Movie not found' });
+        }
+    } catch (error) {
+        console.error('Error deleting movie:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+
+app.get('/deleteMovies', async (req, res) => {
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const movies = await moviesCollection.find().toArray();
+        res.sendFile(path.join(__dirname, "/public/contentManDelete.html"));
+        //res.json(movies);
+    } catch (error) {
+        console.error('Error fetching movies:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
