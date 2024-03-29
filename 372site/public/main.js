@@ -59,7 +59,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     $.post('/login', userInfo, (response) => {
                         if (response.success) {
                             // Successful login, redirect to another page
-                            window.location.href = '/movies';
+                            if (response.message === "Viewer") {
+                                window.location.href = '/moviesV';
+                            }
+                            if (response.message === "Content Manager") {
+                                window.location.href = '/moviesC';
+                            }
                         } else {
                             if (response.message === 'Username not found') {
                                 // Username not found
@@ -67,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             } else if (response.message.startsWith('Incorrect password')) {
                                 // Incorrect password, display remaining attempts
                                 const remainingAttempts = parseInt(response.message.split(':')[1]);
-                                if (remainingAttempts > 0) {
+                                if (remainingAttempts < 5) {
                                     setFormMessage(loginForm, "error", `Incorrect password. Remaining attempts: ${5 - remainingAttempts}`);
                                 } else {
                                     setFormMessage(loginForm, "error", `User Deleted`);
@@ -83,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     $.post('/signup', userInfo, (response) => {
                         if (response.success) {
                             // Successful login, redirect to another page
-                            window.location.href = '/movies';
+                            window.location.href = '/moviesV';
                         } else {
                             setFormMessage(loginForm, "error", response.message);
                         }

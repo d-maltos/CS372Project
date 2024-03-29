@@ -28,16 +28,4 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error('Error fetching movies:', error);
         alert("Error fetching movies. Please try again.");
     }
-
-    const addButton = document.getElementById("add");
-    addButton.addEventListener("click", () => {
-        window.location.href = '/addMovies';
-        console.log("Successful Add detection");
-    });
-
-    const deleteButton = document.getElementById("delete");
-    deleteButton.addEventListener("click", () => {
-        window.location.href = '/deleteMovies';
-        console.log("Successful Delete detection");
-    });
 });

@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.success) {
                 alert("Movie deleted successfully!");
                 // Successful addition, redirect to another page
-                window.location.href = '/movies';
+                window.location.href = '/moviesC';
             } else {
                 alert("Error deleting movie. Please try again.");
             }

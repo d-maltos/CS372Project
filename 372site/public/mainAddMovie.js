@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (response.success) {
                 alert("Movie added successfully!");
                 // Successful addition, redirect to another page
-                window.location.href = '/movies';
+                window.location.href = '/moviesC';
             } else {
                 alert("Error adding movie. Please try again.");
             }

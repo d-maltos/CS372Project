@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Content Management</title>
+</head>
+<body>
+    <div class="wrapper">
+        <h1>Movie Library</h1>
+        <div id="movieList">
+            <% movies.forEach(movie => { %>
+                <div>
+                    <h3><%= movie.title %></h3>
+                    <p><a href="/movies/<%= movie.title %>" target="_blank">Watch Now</a></p>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <script src="viewerBrowseMain.js"></script>
+</body>
+</html>

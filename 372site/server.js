@@ -51,11 +51,23 @@ async function checkPasswordAndUpdateAttempts(username, password, collection) {
             // Update failed attempts
             await collection.updateOne({ username: username }, { $inc: { failedAttempts: 1 } });
             console.log(`Failed attempts for user '${username}' incremented successfully.`);
+
+            if (user.failedAttempts >= 4) {
+                // Delete user from MongoDB
+                await collection.deleteOne({ username: username });
+                console.log(`User '${username}' deleted due to exceeding failed login attempts.`);
+            }
+
             return false;
         }
     } else {
         return false;
     }
+}
+
+async function getRole(username, collection) {
+    const user = await collection.findOne({ username: username });
+    return user.profile;
 }
 
 
@@ -70,7 +82,7 @@ async function createUser(username, password, collection) {
     // Hash the password using SHA-256
     const hashedPassword = crypto.createHash("sha256").update(password).digest("hex");
 
-    await collection.insertOne({ username: username, password: hashedPassword, failedAttempts: 0 });
+    await collection.insertOne({ username: username, password: hashedPassword, failedAttempts: 0, profile: "Viewer" });
     console.log(`User '${username}' created successfully.`);
     return true;
 }
@@ -93,11 +105,22 @@ app.get('/success', (req, res) => {
     res.json("Successful Login Credentials");
 });
 
-app.get('/movies', async (req, res) => {
+app.get('/moviesC', async (req, res) => {
     try {
         const moviesCollection = await connectToMongoDB("movies");
         const movies = await moviesCollection.find().toArray();
         res.render('contentMan', { movies });
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+app.get('/moviesV', async (req, res) => {
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const movies = await moviesCollection.find().toArray();
+        res.render('viewerBrowse', { movies });
     } catch (error) {
         console.error('Error fetching movies:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
@@ -247,7 +270,13 @@ app.post('/login', async (req, res) => {
         if (user) {
             const passwordCorrect = await checkPasswordAndUpdateAttempts(username, password, usersCollection);
             if (passwordCorrect) {
-                res.json({ success: true, message: 'Login successful' });
+                const role = await getRole(username, usersCollection);
+                if (role === "Viewer") {
+                    res.json({ success: true, message: 'Viewer' });
+                }
+                if (role === "Content Manager") {
+                    res.json({ success: true, message: 'Content Manager' });
+                }
             } else {
                 const failedAttempts = await getFailedAttempts(username, usersCollection);
                 res.json({ success: false, message: `Incorrect password: ${failedAttempts}` });
