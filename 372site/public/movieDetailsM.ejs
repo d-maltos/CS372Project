@@ -13,7 +13,9 @@
         </div>
         <h2><%= movie.title %></h2>
         <p><%= movie.description %></p>
+        <p>Views: <span id="likeCount"><%= movie.views %></span></p>
         <button id="likeButton">Like</button>
+        <p>Likes: <span id="likeCount"><%= movie.likes %></span></p>
 
         <form id="commentForm">
             <textarea id="comment" name="comment" placeholder="Leave a comment" rows="4" cols="50"></textarea>
