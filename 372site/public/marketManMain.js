@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const response = await fetch('/moviesC');
+        const response = await fetch('/moviesM');
         const html = await response.text();
         
         // Create a temporary element to parse the received HTML
@@ -21,23 +21,11 @@ document.addEventListener("DOMContentLoaded", async () => {
                 event.preventDefault(); // Prevent default link behavior
                 const movieTitle = link.dataset.movieTitle;
                 console.log("Movie title:", movieTitle);
-                window.location.href = `/moviesC/${encodeURIComponent(movieTitle)}`;
+                window.location.href = `/moviesM/${encodeURIComponent(movieTitle)}`;
             });
         });
     } catch (error) {
         console.error('Error fetching movies:', error);
         alert("Error fetching movies. Please try again.");
     }
-
-    const addButton = document.getElementById("add");
-    addButton.addEventListener("click", () => {
-        window.location.href = '/addMovies';
-        console.log("Successful Add detection");
-    });
-
-    const deleteButton = document.getElementById("delete");
-    deleteButton.addEventListener("click", () => {
-        window.location.href = '/deleteMovies';
-        console.log("Successful Delete detection");
-    });
 });

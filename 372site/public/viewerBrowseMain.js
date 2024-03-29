@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const response = await fetch('/moviesC');
+        const response = await fetch('/moviesV');
         const html = await response.text();
         
         // Create a temporary element to parse the received HTML
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 event.preventDefault(); // Prevent default link behavior
                 const movieTitle = link.dataset.movieTitle;
                 console.log("Movie title:", movieTitle);
-                window.location.href = `/movies/${encodeURIComponent(movieTitle)}`;
+                window.location.href = `/moviesV/${encodeURIComponent(movieTitle)}`;
             });
         });
     } catch (error) {

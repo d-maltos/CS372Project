@@ -10,17 +10,15 @@
 <body>
     <div class="wrapper">
         <h1>Movie Library</h1>
-        <button type="button" class="btn" id="add">Add</button>
-        <button type="button" class="btn" id="delete">Delete</button>
         <div id="movieList">
             <% movies.forEach(movie => { %>
                 <div>
                     <h3><%= movie.title %></h3>
-                    <p><a href="/moviesC/<%= movie.title %>" target="_blank">Watch Now</a></p>
+                    <p><a href="/moviesM/<%= movie.title %>" target="_blank">Watch Now</a></p>
                 </div>
             <% }); %>
         </div>
     </div>
-    <script src="contentManMain.js"></script>
+    <script src="marketManMain.js"></script>
 </body>
 </html>

@@ -127,6 +127,17 @@ app.get('/moviesV', async (req, res) => {
     }
 });
 
+app.get('/moviesM', async (req, res) => {
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const movies = await moviesCollection.find().toArray();
+        res.render('marketMan', { movies });
+    } catch (error) {
+        console.error('Error fetching movies:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
 async function getMovieDetails(title) {
     const moviesCollection = await connectToMongoDB("movies");
     const movie = await moviesCollection.findOne({ title: title });
@@ -154,12 +165,36 @@ function extractVideoIdFromLink(link) {
 
 
 
-app.get('/movies/:title', async (req, res) => {
+app.get('/moviesV/:title', async (req, res) => {
     try {
         const title = req.params.title;
         // Query the database or any other data source to get details of the movie
-        const movieDetails = await getMovieDetails(title); // Implement this function to get details of the movie
-        res.render('movieDetails', { movie: movieDetails }); // Render the movie details template with the data
+        const movieDetailsV = await getMovieDetails(title); // Implement this function to get details of the movie
+        res.render('movieDetailsV', { movie: movieDetailsV }); // Render the movie details template with the data
+    } catch (error) {
+        console.error('Error fetching movie details:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+app.get('/moviesC/:title', async (req, res) => {
+    try {
+        const title = req.params.title;
+        // Query the database or any other data source to get details of the movie
+        const movieDetailsC = await getMovieDetails(title); // Implement this function to get details of the movie
+        res.render('movieDetailsC', { movie: movieDetailsC }); // Render the movie details template with the data
+    } catch (error) {
+        console.error('Error fetching movie details:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+app.get('/moviesM/:title', async (req, res) => {
+    try {
+        const title = req.params.title;
+        // Query the database or any other data source to get details of the movie
+        const movieDetailsM = await getMovieDetails(title); // Implement this function to get details of the movie
+        res.render('movieDetailsM', { movie: movieDetailsM }); // Render the movie details template with the data
     } catch (error) {
         console.error('Error fetching movie details:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
@@ -276,6 +311,9 @@ app.post('/login', async (req, res) => {
                 }
                 if (role === "Content Manager") {
                     res.json({ success: true, message: 'Content Manager' });
+                }
+                if (role === "Marketing Manager") {
+                    res.json({ success: true, message: 'Marketing Manager' });
                 }
             } else {
                 const failedAttempts = await getFailedAttempts(username, usersCollection);

@@ -65,6 +65,9 @@ document.addEventListener("DOMContentLoaded", () => {
                             if (response.message === "Content Manager") {
                                 window.location.href = '/moviesC';
                             }
+                            if (response.message === "Marketing Manager") {
+                                window.location.href = '/moviesM';
+                            }
                         } else {
                             if (response.message === 'Username not found') {
                                 // Username not found
