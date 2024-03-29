@@ -13,6 +13,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         // Replace the content of movieListDiv with the extracted content
         const movieListDiv = document.getElementById("movieList");
         movieListDiv.innerHTML = movieListContent;
+
+        // Add event listeners to movie title links to navigate to movie details page
+        const movieTitleLinks = document.querySelectorAll('#movieList [data-movie-title]');
+        movieTitleLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default link behavior
+                const movieTitle = link.dataset.movieTitle;
+                console.log("Movie title:", movieTitle);
+                window.location.href = `/movies/${encodeURIComponent(movieTitle)}`;
+            });
+        });
     } catch (error) {
         console.error('Error fetching movies:', error);
         alert("Error fetching movies. Please try again.");

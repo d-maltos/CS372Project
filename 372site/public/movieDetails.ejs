@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title><%= movie.title %></title>
+</head>
+<body>
+    <div class="wrapper">
+        <h1><%= movie.title %></h1>
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= movie.videoId %>" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <h2><%= movie.title %></h2>
+        <p><%= movie.description %></p>
+    </div>
+</body>
+</html>

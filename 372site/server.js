@@ -97,9 +97,48 @@ app.get('/movies', async (req, res) => {
     try {
         const moviesCollection = await connectToMongoDB("movies");
         const movies = await moviesCollection.find().toArray();
-        res.render('contentMan', { movies }); // Assuming you are using a template engine like EJS
+        res.render('contentMan', { movies });
     } catch (error) {
         console.error('Error fetching movies:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+async function getMovieDetails(title) {
+    const moviesCollection = await connectToMongoDB("movies");
+    const movie = await moviesCollection.findOne({ title: title });
+
+    if (movie) {
+        // Extract video ID from the YouTube link
+        const videoId = extractVideoIdFromLink(movie.link);
+        
+        return {
+            title: movie.title,
+            description: movie.genre,
+            videoId: videoId
+        };
+    } else {
+        throw new Error("Movie not found");
+    }
+}
+
+function extractVideoIdFromLink(link) {
+    // Extract video ID from the YouTube link
+    const urlParams = new URLSearchParams(new URL(link).search);
+    return urlParams.get('v');
+}
+
+
+
+
+app.get('/movies/:title', async (req, res) => {
+    try {
+        const title = req.params.title;
+        // Query the database or any other data source to get details of the movie
+        const movieDetails = await getMovieDetails(title); // Implement this function to get details of the movie
+        res.render('movieDetails', { movie: movieDetails }); // Render the movie details template with the data
+    } catch (error) {
+        console.error('Error fetching movie details:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
