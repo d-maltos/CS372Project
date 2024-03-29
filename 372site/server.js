@@ -201,6 +201,50 @@ app.get('/moviesM/:title', async (req, res) => {
     }
 });
 
+app.post('/likeMovie', async (req, res) => {
+    const title = req.body.title;
+
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const movie = await moviesCollection.findOne({ title: title });
+
+        if (movie) {
+            // Increment the likes by 1
+            await moviesCollection.updateOne({ title: title }, { $inc: { likes: 1 } });
+            console.log(`Likes for movie '${title}' incremented successfully.`);
+            res.json({ success: true, message: 'Likes incremented successfully' });
+        } else {
+            console.log(`Movie '${title}' not found`);
+            res.status(404).json({ success: false, message: 'Movie not found' });
+        }
+    } catch (error) {
+        console.error('Error increasing likes:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+app.post('/incrementView', async (req, res) => {
+    const title = req.body.title;
+
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const movie = await moviesCollection.findOne({ title: title });
+
+        if (movie) {
+            // Increment the views by 1
+            await moviesCollection.updateOne({ title: title }, { $inc: { views: 1 } });
+            console.log(`Likes for movie '${title}' incremented successfully.`);
+            res.json({ success: true, message: 'Likes incremented successfully' });
+        } else {
+            console.log(`Movie '${title}' not found`);
+            res.status(404).json({ success: false, message: 'Movie not found' });
+        }
+    } catch (error) {
+        console.error('Error increasing likes:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
 
 app.get('/addMovies', async (req, res) => {
     try {
@@ -215,26 +259,26 @@ app.get('/addMovies', async (req, res) => {
 });
 
 app.post('/addMovie', async (req, res) => {
-    const { title, genre, link } = req.body;
+    const { title, genre, link, comments } = req.body;
+    const likes = parseInt(req.body.likes);
+    const views = parseInt(req.body.views);
 
-    console.log("Received movie data:");
-    console.log("Title:", title);
-    console.log("Genre:", genre);
-    console.log("Link:", link);
-
+    //console.log("Received movie data:");
+    //console.log("Title:", title);
+    //console.log("Genre:", genre);
+    //console.log("Link:", link);
     try {
         const moviesCollection = await connectToMongoDB("movies");
         // Assuming your movies collection has fields title, genre, and link
-        await moviesCollection.insertOne({ title, genre, link });
+        await moviesCollection.insertOne({ title, genre, link, likes, views, comments });
         
-        console.log("Movie added to the database successfully");
+        //console.log("Movie added to the database successfully");
         res.json({ success: true, message: 'Movie added successfully' });
     } catch (error) {
         console.error('Error adding movie:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
-
 
 app.get('/addMovies', async (req, res) => {
     try {

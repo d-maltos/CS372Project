@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const movieInfo = {
             title:title,
             genre:genre,
-            link:link
+            link:link,
+            likes:0,
+            views:0,
+            comments: []
         }
 
         $.post('/addMovie', movieInfo, (response) => {

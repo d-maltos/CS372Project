@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title><%= movie.title %></title>
 </head>
-<body>
+<body data-movie='<%- JSON.stringify(movie) %>'>
     <div class="wrapper">
         <h1><%= movie.title %></h1>
         <div class="video-container">
@@ -14,6 +13,25 @@
         </div>
         <h2><%= movie.title %></h2>
         <p><%= movie.description %></p>
+        <button id="likeButton">Like</button>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var movie = JSON.parse($('body').attr('data-movie'));
+            $('#likeButton').on('click', function() {
+                $.post('/likeMovie', {title: movie.title}, (response) => {
+                    if (response.success) {
+                        alert("Movie liked!");
+                        $('#likeButton').prop('disabled', true); // Disable the button
+                        $('#likeButton').hide(); // Hide the button
+                    } else {
+                        alert("Error liking movie. Please try again.");
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
