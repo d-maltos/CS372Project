@@ -14,13 +14,38 @@
         <h2><%= movie.title %></h2>
         <p><%= movie.description %></p>
         <button id="likeButton">Like</button>
+
+        <form id="commentForm">
+            <textarea id="comment" name="comment" placeholder="Leave a comment" rows="4" cols="50"></textarea>
+            <br>
+            <button type="submit" id="submitCommentButton">Submit Comment</button>
+        </form>
+
+        <h3>Comments</h3>
+        <ul id="commentsList">
+            <% if (movie.comments && movie.comments.length > 0) { %>
+                <% movie.comments.forEach(function(comment) { %>
+                    <li><%= comment %></li>
+                <% }); %>
+            <% } else { %>
+                <li>No comments yet.</li>
+            <% } %>
+        </ul>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
             var movie = JSON.parse($('body').attr('data-movie'));
+
+            $.post('/incrementView', {title: movie.title}, (response) => {
+                if (!response.success) {
+                    console.log("Error incrementing view count.");
+                }
+            }); 
+
             $('#likeButton').on('click', function() {
+                // Like button logic remains unchanged
                 $.post('/likeMovie', {title: movie.title}, (response) => {
                     if (response.success) {
                         alert("Movie liked!");
@@ -28,6 +53,20 @@
                         $('#likeButton').hide(); // Hide the button
                     } else {
                         alert("Error liking movie. Please try again.");
+                    }
+                });
+            });
+
+            $('#commentForm').on('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+                var comment = $('#comment').val(); // Get comment text
+
+                $.post('/addComment', { title: movie.title, comment: comment }, function(response) {
+                    if (response.success) {
+                        $('#commentsList').append('<li>' + comment + '</li>'); // Append the new comment to the list
+                        $('#comment').val(''); // Clear the comment input field
+                    } else {
+                        alert('Error adding comment. Please try again.');
                     }
                 });
             });

@@ -149,7 +149,10 @@ async function getMovieDetails(title) {
         return {
             title: movie.title,
             description: movie.genre,
-            videoId: videoId
+            videoId: videoId,
+            likes: movie.likes,
+            views: movie.views,
+            comments: movie.comments
         };
     } else {
         throw new Error("Movie not found");
@@ -270,7 +273,7 @@ app.post('/addMovie', async (req, res) => {
     try {
         const moviesCollection = await connectToMongoDB("movies");
         // Assuming your movies collection has fields title, genre, and link
-        await moviesCollection.insertOne({ title, genre, link, likes, views, comments });
+        await moviesCollection.insertOne({ title, genre, link, likes, views, comments: [] });
         
         //console.log("Movie added to the database successfully");
         res.json({ success: true, message: 'Movie added successfully' });
@@ -325,6 +328,26 @@ app.get('/deleteMovies', async (req, res) => {
         //res.json(movies);
     } catch (error) {
         console.error('Error fetching movies:', error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+});
+
+app.post('/addComment', async (req, res) => {
+    const { title, comment } = req.body;
+
+    try {
+        const moviesCollection = await connectToMongoDB("movies");
+        const result = await moviesCollection.updateOne({ title: title }, { $push: { comments: comment } });
+
+        if (result.modifiedCount === 1) {
+            console.log(`Comment added to movie '${title}' successfully.`);
+            res.json({ success: true, message: 'Comment added successfully' });
+        } else {
+            console.log(`Movie '${title}' not found`);
+            res.status(404).json({ success: false, message: 'Movie not found' });
+        }
+    } catch (error) {
+        console.error('Error adding comment:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 });
