@@ -14,5 +14,32 @@ Requirements in order of priority:
 
 Optional:
 13. Rust colored background (good to have not mandatory) DONE
-14. Can include a remember me feature or cookies but not required WIP
 
+UserStories:
+
+	Viewer:
+
+1. As a viewer, in order to watch movies, I should be able to access the available movies. DONE
+2. As a viewer, in order to find specific movies, I should be able to search for them. DONE
+3. As a viewer, to maintain easy searching, the same movie should not appear twice. DONE
+4. As a viewer, for organization purposes, movies should be displayed alphabetically. DONE
+5. As a viewer, in order to secure my account, my username and password should be encrypted with SHA-256 and stored in MongoDB. DONE
+
+	Content Manager:	
+    
+1. As a content manager, in order to manage data, I should be able to access the available movies.
+2. As a content manager, in order to manage content easily, I should be able to add movies with a button at the top of my screen. DONE
+3. As a content manager, in order to manage content easily, I should be able to delete movies with a button at the top of the screen. DONE
+4. As a content manager, in order to receive feedback, I should be able to view comments on movies. DONE
+5. As a content manager, in order to secure my account, my username and password should be encrypted with SHA-256 and stored in MongoDB. DONE
+
+
+	Marketing Manager:
+
+
+1. As a marketing manager, in order to view analytics on movies, I should be able to access the available movies. DONE
+2. As a marketing manager, in order to provide feedback, I should be able to add comments on movies that are only viewable by content editors with a button on the movie page. DONE
+3. As a marketing manager, in order to analyze performance, I should be able to view analytics on movies exclusively, such as views,and likes. DONE
+4. As a marketing manager, in order to secure my account, my username and password should be encrypted with SHA-256 and stored in MongoDB. DONE
+Optional Additions:
+9. As a viewer, to show interest in movies, I should be able to like a movie, but the number of likes should only be visible to marketing managers. DONE

@@ -214,7 +214,7 @@ app.post('/likeMovie', async (req, res) => {
         if (movie) {
             // Increment the likes by 1
             await moviesCollection.updateOne({ title: title }, { $inc: { likes: 1 } });
-            console.log(`Likes for movie '${title}' incremented successfully.`);
+            // console.log(`Likes for movie '${title}' incremented successfully.`);
             res.json({ success: true, message: 'Likes incremented successfully' });
         } else {
             console.log(`Movie '${title}' not found`);
@@ -236,7 +236,7 @@ app.post('/incrementView', async (req, res) => {
         if (movie) {
             // Increment the views by 1
             await moviesCollection.updateOne({ title: title }, { $inc: { views: 1 } });
-            console.log(`Likes for movie '${title}' incremented successfully.`);
+            // console.log(`Likes for movie '${title}' incremented successfully.`);
             res.json({ success: true, message: 'Likes incremented successfully' });
         } else {
             console.log(`Movie '${title}' not found`);
