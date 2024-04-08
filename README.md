@@ -2,7 +2,7 @@
 
 Steps for installation:
 
-1. Use git pull in your terminal using the HTTPS url (Ex: "git pull https://github.com/d-maltos/CS372Project.git")
+1. Use git clone in your terminal using the HTTPS url (Ex: "git clone https://github.com/d-maltos/CS372Project.git")
 
 2. Install MongoDB Compass
 - First, navigate to the MongoDB Compass website - https://www.mongodb.com/try/download/compass 
