@@ -127,3 +127,10 @@ body {
 .login, .signup {
     flex-grow: 1;
 }
+
+#movieList div {
+    /* Set a maximum width for movie titles */
+    max-width: 300px; /* Adjust this value according to your layout */
+    /* Allow text to wrap onto the next line */
+    word-wrap: break-word;
+}
