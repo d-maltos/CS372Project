@@ -31,7 +31,10 @@ While this server was designed using MongoDB Compass, it may still work if you u
 
 4. Navigate to CS372Project/372site/ using the cd command in your terminal
 
-5. In your terminal, enter "node server.js"
+5. In your terminal, do the following to create a docker image and run it:
+- While in CS372Project directory enter:
+- docker build -t site-docker .
+- docker run -p 8080:8080 site-docker
 
 6. To access the webpage, go to "http://localhost:8080/"
 

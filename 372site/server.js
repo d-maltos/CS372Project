@@ -13,7 +13,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'public')); // Assuming your EJS files are in a directory named 'views'
 
 
-const mongoURI = "mongodb://localhost:27017"; // MongoDB connection URI
+const mongoURI = "mongodb://host.docker.internal:27017"; // MongoDB connection URI
 const dbName = "MovieSite"; // Name of your MongoDB database
 //const collectionName = "users"; // Name of the collection to store users
 
