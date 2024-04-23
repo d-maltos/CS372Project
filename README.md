@@ -7,8 +7,8 @@ Steps for installation:
 2. Install MongoDB Compass
 - First, navigate to the MongoDB Compass website - https://www.mongodb.com/try/download/compass 
 - Next, scroll down to "MongoDB Compass Download (GUI)"
-- Select the most recent version, select your operating system, and download the exe package
-- Run the .exe installer
+- Select the most recent version, select your operating system, and download the package
+- Run the installer
 - Once this is setup, open MongoDBCompass (it does not need to be open while running the server, this is just to make sure there are no "first time running" installations)
 
 Note: while the server should be able to automatically create the database and collections needed, if it fails to do so automatically please do the following:
@@ -29,18 +29,20 @@ While this server was designed using MongoDB Compass, it may still work if you u
 - Once again open a terminal and type "node -v"
 - If it still does not work, restart your device
 
-4. Navigate to CS372Project using the cd command in your terminal
+4. Ensure you have docker installed. If not, go to the following and install docker for your machine: https://docs.docker.com/engine/install/ 
 
-5. In your terminal, do the following to create a docker image and run it:
+5. Navigate to CS372Project using the cd command in your terminal
+
+6. In your terminal, do the following to create a docker image and run it:
 - While in CS372Project directory enter:
 - docker build -t site-docker .
 - docker run -p 8080:8080 site-docker
 
-6. To access the webpage, go to "http://localhost:8080/"
+7. To access the webpage, go to "http://localhost:8080/"
 
-7. From here you can access the login page and create an account or sign into an existing account
+8. From here you can access the login page and create an account or sign into an existing account
 
-8. Accounts created will automatically be considered as a "Viewer" to give an account new permissions, navigate to the "users" collection in MongoDB Compass (or your preferred software), edit the account of your choosing and replace "Viewer" with either "Content Manager" or "Marketing Manager". To do this in MongoDB Compass:
+9. Accounts created will automatically be considered as a "Viewer" to give an account new permissions, navigate to the "users" collection in MongoDB Compass (or your preferred software), edit the account of your choosing and replace "Viewer" with either "Content Manager" or "Marketing Manager". To do this in MongoDB Compass:
 - Open MongoDBCompass
 - The URI text box should read "mongodb://localhost:27017" if it does not, replace the text inside
 - Click "connect"
@@ -49,7 +51,7 @@ While this server was designed using MongoDB Compass, it may still work if you u
 - While hovering over the object box that pertains to the account you with to edit with your mouse, a pencil icon will appear on the top right of the box. There will be four icons there, the button to edit the account will be the fourth from right to left and should say "Edit document" when you hover over it
 - Press it, and replace the text after "Profile" with whatever account type you wish to grant it.
 
-9. While all of the packages used in this project should automatically be downloaded, in the event this does not occur please enter the following commands in your terminal while in the 372site directory:
+10. While all of the packages used in this project should automatically be downloaded, in the event this does not occur please enter the following commands in your terminal while in the 372site directory:
 - npm install express
 - npm install body-parser
 - npm install ejs
