@@ -29,7 +29,7 @@ While this server was designed using MongoDB Compass, it may still work if you u
 - Once again open a terminal and type "node -v"
 - If it still does not work, restart your device
 
-4. Navigate to CS372Project/372site/ using the cd command in your terminal
+4. Navigate to CS372Project using the cd command in your terminal
 
 5. In your terminal, do the following to create a docker image and run it:
 - While in CS372Project directory enter:
